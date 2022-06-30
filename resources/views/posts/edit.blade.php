@@ -7,7 +7,7 @@
             <div class="card">
                 <div class="card-header">
                     Editar Articulo
-                    <a href="" class="btn btn-sm btn-primary"> Guardar </a>
+                    <a href="" class="btn btn-sm btn-primary">Guardar</a>
                 </div>
 
                 <div class="card-body">
@@ -16,6 +16,7 @@
                             {{ session('status') }}
                         </div>
                     @endif
+
                     <form action="" method="POST">
                         <div>
                             <label for="" class="form-label">Titulo: </label>

@@ -27,7 +27,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        return view('posts.crear');
     }
 
     /**
@@ -38,7 +38,21 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        /*$validar = $request -> validate([
+            'title' => 'required',
+            'body' => 'required'
+            
+        ],['title.required'=>'Necesito un titulo', 
+            'body.required'=>'Necesito el texto']
+        );*/
+
+        Post::create([
+            'title' => $request -> title,
+            'body' => $request -> body
+        ]);
+
+        //return redirect() -> route('posts.index');
+        dd($request);
     }
 
     /**
@@ -75,7 +89,13 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        //
+        $save_post = Post::find($post -> id);
+        $save_post -> title = $request -> title;
+        $save_post -> body = $request -> body;
+        $save_post -> save();
+        return redirect() -> route('posts.index');
+        //dd($save_post);
+
     }
 
     /**

@@ -6,7 +6,7 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">
-                    Editar Articulo
+                    Crear Articulo
                 </div>
 
                 <div class="card-body">
@@ -16,16 +16,15 @@
                         </div>
                     @endif
 
-                    <form action=" {{ route('posts.update', $post ) }} " method="POST"> 
+                    <form action=" {{ route('posts.store') }} " method="POST">
                         @csrf
-                        @method('PATCH')
                         <div>
                             <label for="" class="form-label">Titulo: </label>
-                            <input name="title" value="{{ $post -> title }}" class="form-control">
+                            <input name="title" class="form-control">
                         </div>
                         <div>
                             <label for="" class="form-label">Cuerpo: </label>
-                            <textarea name="body" class="form-control" style="height: 200px"> {{ $post -> body }} </textarea>
+                            <textarea name="body" class="form-control" style="height: 200px"> </textarea>
                         </div>
                         <div>
                             <input type="submit" value="Guardar">

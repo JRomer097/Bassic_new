@@ -20,18 +20,29 @@
                         @csrf
                         <div>
                             <label for="" class="form-label">Titulo: </label>
-                            <input name="title" class="form-control">
+                            <input name="title" class="form-control" value="{{ old('title') }}">
                         </div>
                         <div>
                             <label for="" class="form-label">Cuerpo: </label>
-                            <textarea name="body" class="form-control" style="height: 200px"> </textarea>
+                            <textarea name="body" class="form-control" style="height: 200px" value="{{ old('body') }}"> </textarea>
                         </div>
                         <div>
-                            <input type="submit" value="Guardar">
+                            <input type="submit" value="Guardar" class="btn btn-sm btn-secondary">
                         </div>
                     </form>
                 </div>
 
+                <div>
+                        @if ($errors->any())
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+                </div>
 
             </div>
         </div>

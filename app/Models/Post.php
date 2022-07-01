@@ -38,5 +38,17 @@ class Post extends Model
         return substr($this ->  body, 0, 140 );
     }
 
+    use HasFactory;
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'user_id',
+        'title',
+        'body'
+    ];
 
 }

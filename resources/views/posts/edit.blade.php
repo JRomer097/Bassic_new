@@ -28,7 +28,7 @@
                             <textarea name="body" class="form-control" style="height: 200px"> {{ $post -> body }} </textarea>
                         </div>
                         <div>
-                            <input type="submit" value="Guardar">
+                            <input type="submit" value="Guardar" class="btn btn-sm btn-success">
                         </div>
                     </form>
                 </div>

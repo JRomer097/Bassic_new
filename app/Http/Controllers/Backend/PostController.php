@@ -16,7 +16,6 @@ class PostController extends Controller
     public function index()
     {
         $posts = Post::latest()->get();
-        //return view('posts.index', compact($posts));
         return view('posts.index', compact('posts'));
     }
 
@@ -38,21 +37,24 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        /*$validar = $request -> validate([
+
+        $validar = $request -> validate([
             'title' => 'required',
             'body' => 'required'
             
         ],['title.required'=>'Necesito un titulo', 
             'body.required'=>'Necesito el texto']
-        );*/
+        );
+
 
         Post::create([
+            'user_id' => $request -> user_id = auth() -> user() -> id, 
             'title' => $request -> title,
             'body' => $request -> body
         ]);
 
-        //return redirect() -> route('posts.index');
-        dd($request);
+
+        return redirect() -> route('posts.index');
     }
 
     /**
@@ -77,7 +79,6 @@ class PostController extends Controller
         return view('posts.edit', [
             'post' => $post
         ]);
-        //dd($post);
     }
 
     /**
@@ -94,7 +95,6 @@ class PostController extends Controller
         $save_post -> body = $request -> body;
         $save_post -> save();
         return redirect() -> route('posts.index');
-        //dd($save_post);
 
     }
 

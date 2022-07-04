@@ -16,19 +16,27 @@
                         </div>
                     @endif
 
-                    <form action=" {{ route('posts.update', $post ) }} " method="POST"> 
-                        @csrf
-                        @method('PATCH')
-                        <div>
+                    <form action=" {{ route('posts.update', $post ) }} " method="POST" enctype="multipart/form-data"> 
+                        <div class="form-group">
                             <label for="" class="form-label">Titulo: </label>
-                            <input name="title" value="{{ $post -> title }}" class="form-control">
+                            <input name="title" value="{{ old('title', $post -> title) }}" class="form-control" required>
                         </div>
-                        <div>
-                            <label for="" class="form-label">Cuerpo: </label>
-                            <textarea name="body" class="form-control" style="height: 200px"> {{ $post -> body }} </textarea>
+                        <div class="form-group">
+                            <label for="" class="form-label">Image </label>
+                            <input name="file" type="file">
                         </div>
-                        <div>
-                            <input type="submit" value="Guardar" class="btn btn-sm btn-success">
+                        <div class="form-group">
+                            <label for="" class="form-label">Contenido: </label>
+                            <textarea name="body" class="form-control" style="height: 200px" required> {{ old('body', $post -> body) }} </textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="" class="form-label">Contenido embedido: </label>
+                            <textarea name="iframe" class="form-control" style="height: 200px"> {{ old('iframe', $post -> iframe) }}</textarea>
+                        </div>
+                        <div class="form-group">
+                            @csrf
+                            @method('PUT')
+                            <input type="submit" value="Actualizar" class="btn btn-sm btn-success">
                         </div>
                     </form>
                 </div>

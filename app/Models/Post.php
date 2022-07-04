@@ -33,7 +33,7 @@ class Post extends Model
         return $this-> beLongsTo(User::class);
     }
 
-    public function getGetExcerptAttributes()
+    public function getGetExcerptAttribute()
     {
         return substr($this ->  body, 0, 140 );
     }
@@ -48,7 +48,17 @@ class Post extends Model
     protected $fillable = [
         'user_id',
         'title',
-        'body'
+        'body',
+        'image',
+        'iframe'
     ];
+
+    public function getGetImagenAttribute()
+    {
+        if($this -> image)
+        {
+            return url("storage/$this->image");
+        }
+    }
 
 }

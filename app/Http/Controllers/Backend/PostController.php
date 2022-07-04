@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use App\Models\Post;
 use Illuminate\Http\Request;
+use App\Http\Requests\PostRequest;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -35,26 +37,33 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PostRequest $request)
     {
 
-        $validar = $request -> validate([
+        /*$validar = $request -> validate([
             'title' => 'required',
             'body' => 'required'
             
         ],['title.required'=>'Necesito un titulo', 
-            'body.required'=>'Necesito el texto']
-        );
+            'body.required'=>'Necesito el contenido']
+        );*/
 
 
-        Post::create([
-            'user_id' => $request -> user_id = auth() -> user() -> id, 
-            'title' => $request -> title,
-            'body' => $request -> body
-        ]);
+        $post = Post::create([
+            //'user_id' => $request -> user_id = auth() -> user() -> id, 
+            'user_id' => auth() -> user() -> id
+            /*'title' => $request -> title,
+            'body' => $request -> body*/
+        ] + $request -> all() );
+
+        if($request -> file('file'))
+        {
+            $post -> image = $request -> file('file') -> store('posts', 'public');
+            $post -> save();
+        }
 
 
-        return redirect() -> route('posts.index');
+        return back() -> with('status', 'Creado con éxito');
     }
 
     /**
@@ -76,9 +85,7 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        return view('posts.edit', [
-            'post' => $post
-        ]);
+        return view('posts.edit', compact('post'));
     }
 
     /**
@@ -90,11 +97,23 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        $save_post = Post::find($post -> id);
+
+        /*$save_post = Post::find($post -> id);
         $save_post -> title = $request -> title;
         $save_post -> body = $request -> body;
         $save_post -> save();
-        return redirect() -> route('posts.index');
+        return redirect() -> route('posts.index');*/
+        $post -> update($request -> all());
+        if($request -> file('file'))
+        {
+            //eliminar imagen 
+            Storage::disk('public')->delete($post -> image);
+            //
+            $post -> image = $request -> file('file') -> store('posts', 'public');
+            $post -> save();
+        }
+
+        return back()->with('status', 'Actualizado con éxito');
 
     }
 
@@ -106,7 +125,10 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
+        //Eliminacion imagen
+        Storage::disk('public')->delete($post -> image);
+        //
         $post->delete();
-        return back();
+        return back() -> with('status', 'Eliminado con éxito');
     }
 }

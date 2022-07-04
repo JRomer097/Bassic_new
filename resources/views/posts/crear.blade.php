@@ -16,17 +16,25 @@
                         </div>
                     @endif
 
-                    <form action=" {{ route('posts.store') }} " method="POST">
-                        @csrf
-                        <div>
-                            <label for="" class="form-label">Titulo: </label>
-                            <input name="title" class="form-control" value="{{ old('title') }}">
+                    <form action=" {{ route('posts.store') }} " method="POST"  enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label for="" class="form-label">Titulo* </label>
+                            <input name="title" class="form-control" value="{{ old('title') }}" required>
                         </div>
-                        <div>
-                            <label for="" class="form-label">Cuerpo: </label>
-                            <textarea name="body" class="form-control" style="height: 200px" value="{{ old('body') }}"> </textarea>
+                        <div class="form-group">
+                            <label for="" class="form-label">Imagen </label>
+                            <input type= "file" name="file"> </input>
                         </div>
-                        <div>
+                        <div class="form-group">
+                            <label for="" class="form-label">Contenido: </label>
+                            <textarea name="body" class="form-control" row="6" value="{{ old('body') }}" required> </textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="" class="form-label">Contenido embedido </label>
+                            <textarea name="iframe" class="form-control"> </textarea>
+                        </div>
+                        <div class="form-group">
+                            @csrf
                             <input type="submit" value="Guardar" class="btn btn-sm btn-secondary">
                         </div>
                     </form>
